@@ -1,0 +1,29 @@
+[{
+  "level": "1",
+    "grid": 10,
+    "words": [
+      "Swift",
+      "Kotlin",
+      "ObjectiveC",
+      "Variable",
+      "Java",
+      "Mobile"
+    ],
+    "time": 180
+  },
+  {
+    "level": "2",
+    "grid": 10,
+    "words": [
+      "Swift",
+      "Kotlin",
+      "ObjectiveC",
+      "Variable",
+      "Java",
+      "Mobile",
+      "Lemon"
+    ],
+    "time": 90
+
+}
+]
