@@ -20,6 +20,7 @@ class CustomCollectionViewCell: UICollectionViewCell {
         label.text = "A"
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
+        label.backgroundColor = UIColor.yellow
         return label
     }()
     
