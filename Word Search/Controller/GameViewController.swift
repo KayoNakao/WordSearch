@@ -47,14 +47,13 @@ class GameViewController: UIViewController {
             
             while keep {
                 var i = 0
-                var startNum = Int(arc4random_uniform(UInt32(letterAmount-1)))
+                var startNum = Int.random(in: 0 ..< letterAmount)
                 var direction = getDirection()
-                
-                if characters.count >= 10 {
+                if characters.count >= level.grid {
                     let remind = startNum % 10
-                    startNum = startNum + (10 - remind)
-                    if startNum >= 100 {
-                        startNum = startNum - 90
+                    startNum = startNum + (level.grid - remind)
+                    if startNum >= letterAmount {
+                        startNum = startNum - letterAmount - level.grid
                     }
                     direction = 1
                 }
@@ -62,7 +61,7 @@ class GameViewController: UIViewController {
                 for char in characters{
                     var letter:Letter
                     if i != 0 {
-                        let remaind = (startNum + direction*i) % 10
+                        let remaind = (startNum + direction*i) % level.grid
                         let checked = checkDirection(direction: direction, remind: remaind)
                         
                         
@@ -102,17 +101,17 @@ class GameViewController: UIViewController {
 
     func getDirection()-> Int{
         
-        var num = Int(arc4random_uniform(UInt32(8)))
+        var num = Int.random(in: 0 ... 7)
         
         switch num {
-        case 0: num =  -11
-        case 1: num = -10
-        case 2: num = -9
+        case 0: num = -level.grid - 1
+        case 1: num = -level.grid
+        case 2: num = -level.grid + 1
         case 3: num = -1
         case 4: num = 1
-        case 5: num = 9
-        case 6: num = 10
-        case 7: num = 11
+        case 5: num = level.grid - 1
+        case 6: num = level.grid
+        case 7: num = level.grid + 1
         default: num = 1
         }
         
@@ -121,9 +120,10 @@ class GameViewController: UIViewController {
     
     func checkDirection(direction:Int, remind:Int)->Bool{
         
+        print("remeind: \(remind)")
         switch direction {
-        case -1, -11, 9: if remind == 9 {return true}
-        case 1, 11, -9: if remind == 0 {return true}
+        case -1, -1-level.grid, level.grid-1: if remind == level.grid-1 {return true}
+        case 1, 1+level.grid, -level.grid+1: if remind == 0 {return true}
         
         default: return false
         }
