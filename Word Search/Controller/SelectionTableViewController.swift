@@ -45,8 +45,7 @@ class SelectionViewController: UIViewController {
 
 extension SelectionViewController: UITableViewDataSource, UITableViewDelegate{
     
-    
-     func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
@@ -56,15 +55,16 @@ extension SelectionViewController: UITableViewDataSource, UITableViewDelegate{
     
     
       func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-     let cell = tableView.dequeueReusableCell(withIdentifier: "SelectionTableViewCell", for: indexPath)
-     
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SelectionTableViewCell", for: indexPath)
         let level = levels[indexPath.row]
         cell.textLabel?.text = "Level \(level.level)"
+        cell.imageView?.contentMode = UIView.ContentMode.scaleAspectFit
         cell.imageView?.image = UIImage(named: "Eket Mask.gif")
         
-     return cell
-        
+        return cell
      }
+
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedIndexPath = indexPath.row
@@ -72,6 +72,9 @@ extension SelectionViewController: UITableViewDataSource, UITableViewDelegate{
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
+    }
 
     
 }

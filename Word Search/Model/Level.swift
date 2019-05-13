@@ -12,5 +12,5 @@ struct Level: Codable{
     let level:String
     let grid:Int
     let words:[String]
-    let time:Int
+    var time:Int
 }
