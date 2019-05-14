@@ -17,9 +17,9 @@ extension UIColor {
     
     
     struct GameColor {
-        static let GridYellow = UIColor(red: 250, green: 207, blue: 90)
-        static let ChosenRed = UIColor(red: 255, green: 89, blue: 89)
-        static let SelectGreen = UIColor(red: 73, green: 190, blue: 183)
+        static let GridYellow = UIColor(red: 252, green: 179, blue: 34)
+        static let ChosenRed = UIColor(red: 255, green: 76, blue: 56)
+        static let SelectGreen = UIColor(red: 24, green: 163, blue: 160)
     }
     
 }

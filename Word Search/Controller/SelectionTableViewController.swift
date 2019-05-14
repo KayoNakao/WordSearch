@@ -61,8 +61,9 @@ extension SelectionViewController: UITableViewDataSource, UITableViewDelegate{
         let level = levels[indexPath.row]
         cell.textLabel?.text = "Level \(level.level)"
         cell.imageView?.contentMode = UIView.ContentMode.scaleAspectFit
-        cell.imageView?.image = UIImage(named: "level\(level.level).gif")
+        cell.imageView?.image = UIImage(named: "level\(level.level).png")
         cell.textLabel?.font = UIFont.systemFont(ofSize: (cell.textLabel?.font.pointSize)!, weight: .ultraLight)
+        
         
         return cell
      }

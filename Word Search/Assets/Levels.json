@@ -9,7 +9,8 @@
       "java",
       "mobile"
     ],
-    "time": 180
+    "time": 180,
+    "wordNum": 6
   },
   {
     "level": "2",
@@ -23,12 +24,13 @@
       "mobile",
       "lemon"
     ],
-    "time": 90
+    "time": 90,
+    "wordNum": 7
 
 },
   {
       "level": "3",
-      "grid": 20,
+      "grid": 16,
       "words": [
           "objectivec",
           "kotlin",
@@ -39,7 +41,7 @@
           "lemon",
           "apple"
       ],
-      "time": 90
-      
+      "time": 90,
+      "wordNum": 8
   }
 ]

@@ -13,4 +13,5 @@ struct Level: Codable{
     let grid:Int
     var words:[String]
     var time:Int
+    let wordNum:Int
 }
