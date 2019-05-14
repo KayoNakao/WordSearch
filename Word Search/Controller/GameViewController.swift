@@ -11,7 +11,7 @@ import UIKit
 class GameViewController: UIViewController {
 
     struct Grid{
-        static var amout = 0
+        static var num = 0
     }
     
     //MARK: - IBOutlet
@@ -25,9 +25,9 @@ class GameViewController: UIViewController {
     var screenSize = CGRect()
     var letters: [Letter] = []
     var letterAmount = 0
-    var selectedIndexes:[IndexPath] = []
     var timer: Timer!
-    var numberOfWords = 0
+    var foundIndexes:[IndexPath] = []
+    var selectedIndexes:[IndexPath] = []
     
     //MARK: - Directions
     enum Directions {
@@ -42,14 +42,14 @@ class GameViewController: UIViewController {
         
         var intValue: Int{
             switch self {
-            case .upLeft: return -Grid.amout - 1
-            case .up: return -Grid.amout
-            case .upRight: return -Grid.amout + 1
+            case .upLeft: return -Grid.num - 1
+            case .up: return -Grid.num
+            case .upRight: return -Grid.num + 1
             case .left: return -1
             case .right: return 1
-            case .bottomLeft: return Grid.amout - 1
-            case .bottom: return Grid.amout
-            case .bottomRight: return Grid.amout + 1
+            case .bottomLeft: return Grid.num - 1
+            case .bottom: return Grid.num
+            case .bottomRight: return Grid.num + 1
             }
         }
         
@@ -65,8 +65,11 @@ class GameViewController: UIViewController {
         navigationItem.title = "Level " + level.level
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20, weight: .thin)]
         
+        collectionView.backgroundColor = UIColor.GameColor.GridYellow
+        
         letterAmount = level.grid * level.grid
-        Grid.amout = level.grid
+        Grid.num = level.grid
+
         
         for num in 0...letterAmount-1{
             let word = Letter(wordId: num, isSet: false, letter:"")
@@ -82,8 +85,6 @@ class GameViewController: UIViewController {
         panGesture.addTarget(self, action: #selector(didPanToSelectCells))
         collectionView.addGestureRecognizer(panGesture)
         
-        collectionView.allowsMultipleSelection = true
-
     }
 
     
@@ -105,7 +106,7 @@ class GameViewController: UIViewController {
             timer.invalidate()
             timer = nil
         
-            showAlart(title: "Time is UP", message: "You found \(level.words.count-numberOfWords) word(s)")
+            showAlart(title: "Time is UP", message: "\(level.words.count) word(s) left")
         }
     }
     
@@ -116,46 +117,37 @@ class GameViewController: UIViewController {
         return String(format: "%02d:%02d", minutes, seconds)
     }
 
-
     //MARK: - Set words in grid
     func setWords(){
         
         for word in level.words{
             
             setWordLabel(word: word)
-            numberOfWords += 1
             
             var array:[Letter] = []
             let characters = Array(word)
-            
             var keep = true
             
             while keep {
                 var i = 0
-                
                 var startNum = Int.random(in: 0 ..< letterAmount)
-                if startNum < 0{
-                    startNum = startNum * -1
-                }
-                
                 var direction = getDirection()
                 
-                if characters.count >= level.grid {
+                if characters.count >= Grid.num {
                     let remind = startNum % 10
-                    startNum = startNum + (level.grid - remind)
+                    startNum = startNum + (Grid.num - remind)
                     
                     if startNum >= letterAmount {
-                        startNum = startNum - letterAmount - level.grid
+                        startNum = startNum - Grid.num
                     }
-                    direction = 1
+                    direction = Directions.right(Grid.num).direction
                 }
                 
                 for char in characters{
                     var letter:Letter
                     if i != 0 {
-                        let remaind = (startNum + direction*i) % level.grid
+                        let remaind = (startNum + direction*i) % Grid.num
                         let checked = checkDirection(direction: direction, remind: remaind)
-                        
                         
                         if startNum + direction*i < 0 || startNum + direction*i >= letterAmount || checked {
                             resetLetters(array: array)
@@ -188,6 +180,15 @@ class GameViewController: UIViewController {
                 }
             }
         }
+        var index = 0
+        for var letter in letters{
+            if !letter.isSet {
+                letter.letter = getLetter()
+                letters[index] = letter
+            }
+            index += 1
+        }
+        
     }
     
     
@@ -196,14 +197,14 @@ class GameViewController: UIViewController {
         var num = Int.random(in: 0 ... 7)
         
         switch num {
-        case 0: num = Directions.upLeft(Grid.amout).direction
-        case 1: num = Directions.up(Grid.amout).direction
-        case 2: num = Directions.upRight(Grid.amout).direction
-        case 3: num = Directions.left(Grid.amout).direction
-        case 4: num = Directions.right(Grid.amout).direction
-        case 5: num = Directions.bottomLeft(Grid.amout).direction
-        case 6: num = Directions.bottom(Grid.amout).direction
-        case 7: num = Directions.bottomRight(Grid.amout).direction
+        case 0: num = Directions.upLeft(Grid.num).direction
+        case 1: num = Directions.up(Grid.num).direction
+        case 2: num = Directions.upRight(Grid.num).direction
+        case 3: num = Directions.left(Grid.num).direction
+        case 4: num = Directions.right(Grid.num).direction
+        case 5: num = Directions.bottomLeft(Grid.num).direction
+        case 6: num = Directions.bottom(Grid.num).direction
+        case 7: num = Directions.bottomRight(Grid.num).direction
         default: num = 1
         }
         return num
@@ -214,14 +215,14 @@ class GameViewController: UIViewController {
         
         switch direction {
             
-        case Directions.upLeft(Grid.amout).direction,
-             Directions.left(Grid.amout).direction,
-             Directions.bottomLeft(Grid.amout).direction:
+        case Directions.upLeft(Grid.num).direction,
+             Directions.left(Grid.num).direction,
+             Directions.bottomLeft(Grid.num).direction:
              if remind == level.grid-1 {return true}
             
-        case Directions.right(Grid.amout).direction,
-             Directions.bottomRight(Grid.amout).direction,
-             Directions.upRight(Grid.amout).direction:
+        case Directions.right(Grid.num).direction,
+             Directions.bottomRight(Grid.num).direction,
+             Directions.upRight(Grid.num).direction:
              if remind == 0 {return true}
             
         default: return false
@@ -230,7 +231,7 @@ class GameViewController: UIViewController {
     }
     
     
-    func resetLetters(array:[Letter]){
+    func  resetLetters(array:[Letter]){
         
         for var letter in array{
             letter.isSet = false
@@ -263,7 +264,7 @@ class GameViewController: UIViewController {
     @objc func didPanToSelectCells(panGesture: UIPanGestureRecognizer)->Void{
         
         var location: CGPoint
-        let cellLocation: CGPoint
+        var cellLocation: CGPoint
         var indexPath: IndexPath = IndexPath(item: 0, section: 0)
         
         if (panGesture.state == UIGestureRecognizer.State.began){
@@ -272,7 +273,7 @@ class GameViewController: UIViewController {
             indexPath = collectionView.indexPathForItem(at: location) ?? IndexPath(item: 0, section: 0)
             
             let cell = collectionView.cellForItem(at: indexPath)
-            cell?.backgroundColor = UIColor.red
+            cell?.backgroundColor = UIColor.GameColor.SelectGreen
             
             selectedIndexes.append(indexPath)
             
@@ -286,15 +287,13 @@ class GameViewController: UIViewController {
                 cellLocation = panGesture.location(in: cell)
                 for view in cell!.subviews{
                     if let label = view as? UILabel {
-                        //                        print("celllocation: \(cellLocation)")
-                        //                        print("labelFrame: \(label.frame)")
+                        
                         if label.frame.contains(cellLocation) {
-                            cell?.backgroundColor = UIColor.red
+                            cell?.backgroundColor = UIColor.GameColor.SelectGreen
+                            selectedIndexes.append(indexPath)
                         }
                     }
                 }
-                selectedIndexes.append(indexPath)
-                cell?.backgroundColor = UIColor.red
                 collectionView.selectItem(at: indexPath, animated: true, scrollPosition: [])
             }
             
@@ -304,25 +303,47 @@ class GameViewController: UIViewController {
                 let letter = letters[indexPath.row]
                 selectedWord = selectedWord + letter.letter
             }
+            
             if level.words.contains(selectedWord){
+                let index = level.words.firstIndex(of: selectedWord)
+                level.words.remove(at: index!)
+                
+
                 for view in stackView.arrangedSubviews{
-                    if let lable = view as? UILabel {
-                        if lable.text == selectedWord{
-                            lable.textColor = UIColor.red
+                    if let label = view as? UILabel {
+                        if label.text == selectedWord{
+                            label.textColor = UIColor.GameColor.ChosenRed
+                            label.font = UIFont.systemFont(ofSize: label.font.pointSize, weight: .thin)
                             break
                         }
                     }
                 }
-                numberOfWords -= 1
-                if numberOfWords == 0 {
-                    showAlart(title: "Congratulations!", message: "You found all the words")
+                for indexPath in selectedIndexes{
+                    let cell = collectionView.cellForItem(at: indexPath)
+                    UIView.animate(withDuration: 1, animations: { () -> Void in
+                        cell?.backgroundColor = UIColor.GameColor.ChosenRed
+                    })
+                    foundIndexes.append(indexPath)
+                }
+ 
+                if level.words.count == 0 {
+                    showAlart(title: "Congratulations!", message: "You've found all the words")
                     timer.invalidate()
                 }
                 selectedIndexes = []
+                
             }else{
                 for indexPath in selectedIndexes{
-                    let cell = collectionView.cellForItem(at: indexPath)
-                    cell?.backgroundColor = UIColor.yellow
+                        let cell = collectionView.cellForItem(at: indexPath)
+                     if !foundIndexes.contains(indexPath){
+                        UIView.animate(withDuration: 1, animations: { () -> Void in
+                            cell?.backgroundColor = UIColor.GameColor.GridYellow
+                        })
+                     }else{
+                        UIView.animate(withDuration: 1, animations: { () -> Void in
+                            cell?.backgroundColor = UIColor.GameColor.ChosenRed
+                        })
+                    }
                 }
                 selectedIndexes = []
             }
@@ -344,20 +365,17 @@ extension GameViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "gameCell", for: indexPath)
-        
-        
+
         let letter = letters[indexPath.row]
         
         for view in cell.subviews{
             if let label = view as? UILabel{
-                
-             cell.backgroundColor = UIColor.yellow
-                
-                if letter.isSet {
-                    label.text = letter.letter
-                }else{
-                    label.text = getLetter()
+                cell.backgroundColor = UIColor.clear//UIColor.GameColor.GridYellow
+                label.text = letter.letter
+                if let customCell = cell as? CustomCollectionViewCell{
+                    customCell.setupSubview(label: label, sender:customCell)
                 }
             }
         }
@@ -373,8 +391,11 @@ extension GameViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
+        
         let width:CGFloat = collectionView.contentSize.width / CGFloat(level.grid)
         
+        print("cell size \(width)")
+
         return CGSize(width: width, height: width)
     }
     

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6D08004F228A17B100ED596F /* GameColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D08004E228A17B100ED596F /* GameColor.swift */; };
+		6D080054228B116700ED596F /* level2.gif in Resources */ = {isa = PBXBuildFile; fileRef = 6D080051228B116700ED596F /* level2.gif */; };
+		6D080055228B116700ED596F /* level3.gif in Resources */ = {isa = PBXBuildFile; fileRef = 6D080052228B116700ED596F /* level3.gif */; };
+		6D080056228B116700ED596F /* level1.gif in Resources */ = {isa = PBXBuildFile; fileRef = 6D080053228B116700ED596F /* level1.gif */; };
 		6D1D36B12285B5130042F768 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1D36B02285B5130042F768 /* AppDelegate.swift */; };
 		6D1D36B32285B5130042F768 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1D36B22285B5130042F768 /* GameViewController.swift */; };
 		6D1D36B62285B5130042F768 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6D1D36B42285B5130042F768 /* Main.storyboard */; };
@@ -21,6 +25,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6D08004E228A17B100ED596F /* GameColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameColor.swift; sourceTree = "<group>"; };
+		6D080051228B116700ED596F /* level2.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = level2.gif; sourceTree = "<group>"; };
+		6D080052228B116700ED596F /* level3.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = level3.gif; sourceTree = "<group>"; };
+		6D080053228B116700ED596F /* level1.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = level1.gif; sourceTree = "<group>"; };
 		6D1D36AD2285B5130042F768 /* Word Search.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Word Search.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D1D36B02285B5130042F768 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6D1D36B22285B5130042F768 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
@@ -47,6 +55,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6D080050228B115100ED596F /* icon */ = {
+			isa = PBXGroup;
+			children = (
+				6D1D36CF2285CFB20042F768 /* Eket Mask.gif */,
+				6D080053228B116700ED596F /* level1.gif */,
+				6D080051228B116700ED596F /* level2.gif */,
+				6D080052228B116700ED596F /* level3.gif */,
+			);
+			path = icon;
+			sourceTree = "<group>";
+		};
 		6D1D36A42285B5130042F768 = {
 			isa = PBXGroup;
 			children = (
@@ -79,9 +98,9 @@
 		6D1D36C22285B5270042F768 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				6D080050228B115100ED596F /* icon */,
 				6D1D36CD2285C8A40042F768 /* Levels.json */,
 				6D1D36B42285B5130042F768 /* Main.storyboard */,
-				6D1D36CF2285CFB20042F768 /* Eket Mask.gif */,
 				6D1D36B72285B5160042F768 /* Assets.xcassets */,
 				6D1D36B92285B5160042F768 /* LaunchScreen.storyboard */,
 			);
@@ -110,6 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				6D1D36D22285F2F20042F768 /* CustomCollectionViewCell.swift */,
+				6D08004E228A17B100ED596F /* GameColor.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -174,9 +194,12 @@
 			files = (
 				6D1D36BB2285B5160042F768 /* LaunchScreen.storyboard in Resources */,
 				6D1D36D02285CFB20042F768 /* Eket Mask.gif in Resources */,
+				6D080054228B116700ED596F /* level2.gif in Resources */,
 				6D1D36B82285B5160042F768 /* Assets.xcassets in Resources */,
+				6D080055228B116700ED596F /* level3.gif in Resources */,
 				6D1D36CE2285C8A40042F768 /* Levels.json in Resources */,
 				6D1D36B62285B5130042F768 /* Main.storyboard in Resources */,
+				6D080056228B116700ED596F /* level1.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -191,6 +214,7 @@
 				6D1D36D32285F2F20042F768 /* CustomCollectionViewCell.swift in Sources */,
 				6D1D36B12285B5130042F768 /* AppDelegate.swift in Sources */,
 				6D1D36CA2285B9470042F768 /* Level.swift in Sources */,
+				6D08004F228A17B100ED596F /* GameColor.swift in Sources */,
 				6D1D36C72285B56E0042F768 /* SelectionTableViewController.swift in Sources */,
 				6D1D36D5228657350042F768 /* Letter.swift in Sources */,
 			);

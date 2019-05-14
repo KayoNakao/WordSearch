@@ -14,23 +14,23 @@ class SelectionViewController: UIViewController {
     var levels = [Level]()
     var selectedIndexPath = 0
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         
-            let url = Bundle.main.url(forResource: "Levels", withExtension: "json")
-            if let url = url{
-                let data = try! Data(contentsOf: url)
-                let decoder = JSONDecoder()
-                do{
-                    levels = try decoder.decode([Level].self, from: data)
-                }catch{
-                    print("error")
-                }
+        //Get game data
+        let url = Bundle.main.url(forResource: "Levels", withExtension: "json")
+        
+        if let url = url{
+            let data = try! Data(contentsOf: url)
+            let decoder = JSONDecoder()
+            do{
+                levels = try decoder.decode([Level].self, from: data)
+            }catch{
+                print("error")
             }
-            self.tableView.reloadData()
-        
-
+        }
+        self.tableView.reloadData()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -39,10 +39,11 @@ class SelectionViewController: UIViewController {
             gameVC.level = levels[selectedIndexPath]
         }
     }
-    
-    
 }
 
+
+
+//MARK: - UITableView delegate, dataSouce
 extension SelectionViewController: UITableViewDataSource, UITableViewDelegate{
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -60,7 +61,8 @@ extension SelectionViewController: UITableViewDataSource, UITableViewDelegate{
         let level = levels[indexPath.row]
         cell.textLabel?.text = "Level \(level.level)"
         cell.imageView?.contentMode = UIView.ContentMode.scaleAspectFit
-        cell.imageView?.image = UIImage(named: "Eket Mask.gif")
+        cell.imageView?.image = UIImage(named: "level\(level.level).gif")
+        cell.textLabel?.font = UIFont.systemFont(ofSize: (cell.textLabel?.font.pointSize)!, weight: .ultraLight)
         
         return cell
      }

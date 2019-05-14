@@ -12,7 +12,7 @@ class CustomCollectionViewCell: UICollectionViewCell {
     
         required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        setupViews()
+        self.addSubview(letterLabel)
     }
     
     let letterLabel:UILabel = {
@@ -20,28 +20,22 @@ class CustomCollectionViewCell: UICollectionViewCell {
         label.text = ""
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
-        //label.backgroundColor = UIColor.green
+        label.backgroundColor = UIColor.clear//UIColor.green
         label.font = UIFont.systemFont(ofSize: label.font.pointSize, weight: .thin)
         return label
     }()
     
-    func setupViews(){
-        self.addSubview(letterLabel)
-        
-        
-//        let heightConstraint = NSLayoutConstraint(item: letterLabel, attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: 25)
-//
-//        let widthConstraint = NSLayoutConstraint(item: letterLabel, attribute: NSLayoutConstraint.Attribute.width, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: self.frame.size.width/2)
+     func setupSubview(label:UILabel, sender cell:UICollectionViewCell){
+        let heightConstraint = NSLayoutConstraint(item: label, attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: cell.frame.size.height*0.7)
 
+        let widthConstraint = NSLayoutConstraint(item: label, attribute: NSLayoutConstraint.Attribute.width, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: cell.frame.size.width*0.7)
+        
         NSLayoutConstraint.activate([
-            letterLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            letterLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+            label.centerXAnchor.constraint(equalTo: cell.centerXAnchor),
+            label.centerYAnchor.constraint(equalTo: cell.centerYAnchor),
+            heightConstraint, widthConstraint
             ])
-        
-        letterLabel.font = letterLabel.font.withSize(letterLabel.frame.size.width)
-
     }
-    
     
     
 }

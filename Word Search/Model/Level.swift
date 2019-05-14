@@ -11,6 +11,6 @@ import Foundation
 struct Level: Codable{
     let level:String
     let grid:Int
-    let words:[String]
+    var words:[String]
     var time:Int
 }

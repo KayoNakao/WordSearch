@@ -25,5 +25,21 @@
     ],
     "time": 90
 
-}
+},
+  {
+      "level": "3",
+      "grid": 20,
+      "words": [
+          "objectivec",
+          "kotlin",
+          "swift",
+          "variable",
+          "java",
+          "mobile",
+          "lemon",
+          "apple"
+      ],
+      "time": 90
+      
+  }
 ]
