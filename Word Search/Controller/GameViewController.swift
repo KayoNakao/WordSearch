@@ -98,7 +98,9 @@ class GameViewController: UIViewController {
     //MARK: - UIAlert
     func showAlart(title: String, message: String) {
         let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
+            self.navigationController?.popToRootViewController(animated: true)
+        }))
         present(alertVC, animated: true, completion: nil)
     }
     
